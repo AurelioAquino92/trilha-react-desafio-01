@@ -16,9 +16,12 @@ export function TaskList() {
 
   function handleCreateNewTask() {
     // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
+    
     if (newTaskTitle == '') return
 
     const newTask = {
+      // Gerando id achando o maior id somando +1
+      // Ou igual a 1 ser for o primeiro TO-DO adicionado
       id: tasks.length > 0 ? Math.max(...tasks.map(task => task.id)) + 1 : 1,
       title: newTaskTitle,
       isComplete: false
@@ -28,6 +31,10 @@ export function TaskList() {
 
   function handleToggleTaskCompletion(id: number) {
     // Altere entre `true` ou `false` o campo `isComplete` de uma task com dado ID
+
+    // Fazendo uma cópia dos TO-DOs atuais, então encontro o índice
+    // do TO-DO clicado para alterar o checked dele.
+    // Depois uso o setTasks, mantendo o conceito de imutabilidade
     let newTasks = tasks.slice()
     const taskIdx = tasks.findIndex(task => task.id == id)
     newTasks[taskIdx].isComplete = !newTasks[taskIdx].isComplete
@@ -36,6 +43,8 @@ export function TaskList() {
 
   function handleRemoveTask(id: number) {
     // Remova uma task da listagem pelo ID
+
+    // Um simples uso de filter como solução
     setTasks(tasks.filter(task => task.id != id))
   }
 
